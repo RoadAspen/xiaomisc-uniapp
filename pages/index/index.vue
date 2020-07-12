@@ -1,9 +1,6 @@
 <template>
 	<view class="content">
 		<image v-if="show" class="logo animate__animated animate__bounceIn animate__fast" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
 		<view style="font-size: 50px;" class="iconfont icon-xiaoxi"></view>
 		<button @click="toggle">点击显示图片</button>
 	</view>
