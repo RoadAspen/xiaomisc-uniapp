@@ -1,5 +1,34 @@
 {
-	// 全局配置
+	// 全局配置 默认的页面窗口表现
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#F7F7F7",// 导航栏背景颜色（同状态栏背景色）  默认为 #F7F7F7
+		"navigationBarTextStyle":"black", //导航栏标题颜色及状态栏前景颜色，仅支持 black/white 默认为 white
+		"navigationBarTitleText": "仿小米商城app",// 导航栏标题文字内容   会被pages设置的覆盖
+		"navigationStyle":"default", // 导航栏样式，仅支持 default/custom。custom即取消默认的原生导航栏，需看使用注意 , 默认为default
+		"backgroundColor": "#FFFFFF" ,// 下拉显示出来的窗口的背景色 默认 ffffff
+		"backgroundTextStyle":"dark", // 下拉 loading 的样式，仅支持 dark / light
+		"enablePullDownRefresh":false, // 是否开启下拉刷新
+		"onReachBottomDistance":50, // 页面上拉触底事件触发时距页面底部距离，单位只支持px  默认 50
+		"backgroundColorTop":"#FFFFFF", // 顶部窗口的背景色 （bounce回弹区域）  iOS 平台
+		"backgroundColorBottom":"#FFFFFF",// 底部窗口的背景色 （bounce回弹区域）  iOS 平台
+		"titleImage":"",// 导航栏图片地址（替换当前文字标题），支付宝小程序内必须使用https的图片链接地址   支付宝小程序、H5、APP
+		"transparentTitle":"none",// 导航栏整体（前景、背景）透明设置。支持 always 一直透明 / auto 滑动自适应 / none 不透明  支付宝小程序、H5、APP
+		"titlePenetrate":"NO", // 导航栏点击穿透    支付宝小程序、H5
+		"pageOrientation":"portrait", // 横屏配置，屏幕旋转设置，仅支持 auto / portrait / landscape   App 2.4.7+、微信小程序
+		"animationType":"pop-in", // 窗口显示的动画效果      默认 pop-in    App
+		"animationDuration":300 ,// 窗口显示动画的持续时间，单位为 ms  默认 300    App
+		"app-plus":{}, // 设置编译到 App 平台的特定样式   App
+		"h5":{}, // 设置编译到 H5 平台的特定样式   H5
+		"mp-alipay":{},// 设置编译到 mp-alipay 平台的特定样式     支付宝小程序
+		"mp-weixin":{}, // 设置编译到 mp-weixin平台的特定样式     微信小程序
+		"mp-baidu":{},  // 设置编译到 mp-baidu 平台的特定样式     百度小程序
+		"mp-toutiao":{}, // 设置编译到 mp-toutiao 平台的特定样式  字节跳动小程序
+		"mp-qq":{}, // 设置编译到 mp-qq 平台的特定样式   QQ小程序
+		"usingComponents": {}, //  引用小程序组件
+		"renderingMode":"" // 同层渲染，webrtc(实时音视频) 无法正常时尝试配置 seperated 强制关掉同层    微信小程序
+	},
+	// 全局页面配置，必填， 设置页面路径及窗口表现, 具体设置与 globalstyle 相同，页面中配置项会覆盖 globalStyle 中相同的配置项
+	// 用于设置每个页面的状态栏、导航条、标题、窗口背景色等。
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
@@ -9,29 +38,28 @@
 		}
 	    ,{
             "path" : "pages/class/class",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "分类"
+			}
         }
         ,{
             "path" : "pages/cart/cart",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"购物车"
+			}
         }
         ,{
             "path" : "pages/my/my",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"我的"
+			}
         }
     ],
-	//全局配置
-	"globalStyle": {
-		"navigationBarTextStyle": "black",// 导航的文字颜色
-		"navigationBarTitleText": "仿小米商城app",// 导航的文字
-		"navigationBarBackgroundColor": "#FFFFFF",// 导航的背景色
-		"backgroundColor": "#FFFFFF" // 背景色
-	},
-	// 底部导航
+	// 设置底部 tab 的表现
 	"tabBar":{
-		"color":"#B1B1B1", // 文字颜色
-		"selectedColor":"#FD6801",// 
-		"borderStyle":"black",
+		"color":"#B1B1B1", // 底部文字颜色
+		"selectedColor":"#FD6801",// 当前导航的激活色, active_class
+		"borderStyle":"black", // 底部导航的顶部边框色, 可选 black white
 		"backgroundColor":"#FFFFFF",
 		"list":[
 			{
@@ -59,5 +87,55 @@
 				"text":"我的"
 			}
 		]
-	}
+	},
+	//组件自动引入规则  自动开启，不需要手动开启，有需求时
+	// "easycom":{  // easycom方式引入的组件无需在页面内import，也不需要在components内声明，即可在任意页面使用
+	// 	"autoscan": true,
+	// 	"custom": {
+	// 	    "^uni-(.*)": "@/components/uni-$1.vue", // 匹配components目录内的vue文件
+	// 	    "^vue-file-(.*)": "packageName/path/to/vue-file-$1.vue" // 匹配node_modules内的vue文件
+	// 	}
+	// },
+	// 启动模式配置  仅开发期间生效
+	"condition":{  // 用于模拟直达页面的场景，如：小程序转发后，用户点击所打开的页面。
+		"current": 0, //当前激活的模式（list 的索引项）
+		"list": [{
+				"name": "swiper", //模式名称
+				"path": "pages/component/swiper/swiper", //启动页面，必选
+				"query": "interval=4000&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+			},
+			{
+				"name": "test",
+				"path": "pages/component/switch/switch"
+			}
+		]
+	},
+	// 分包加载配置
+	// "subPackages":[//分包加载配置，此配置为小程序的分包加载机制。
+	// 	{
+	// 		"root": "pagesA",
+	// 		"pages": [{
+	// 			"path": "list/list"
+	// 		}]
+	// 	}, {
+	// 		"root": "pagesB",
+	// 		"pages": [{
+	// 			"path": "detail/detail"
+	// 		}]
+	// 	}
+	// ],
+	
+	// 分包预下载规则  微信小程序必须 由框架自动预下载可能需要的分包，提升进入后续分包页面时的启动速度
+	"preloadRule": {
+		"pagesA/list/list": {   // 页面路径
+			"network": "all",    // 预下载配置
+			"packages": ["__APP__"]
+		},
+		"pagesB/detail/detail": {
+			"network": "all",
+			"packages": ["pagesA"]
+		}
+	},
+	// Worker 代码放置的目录  微信小程序必须
+	"workers":"" 
 }
