@@ -33,7 +33,38 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "仿小米商城"
+				// "navigationBarTitleText": "仿小米商城",
+				"app-plus":{
+					"scrollIndicator":"none", // 不显示滚动条
+					"titleNView":{ // 设置顶部导航栏
+						"searchInput":{ // 搜索框，点击跳转到搜索页
+							"align":"left",
+							"backgroundColor":"#F7F7F7",
+							"borderRadius":"4px",
+							"disabled":true,
+							"placeholder":"智能积木 越野四驱车",
+							"placeholderColor":"#CCCCCC"
+						},
+						"buttons":[
+							{
+								"color":"#969896",
+								"colorPressed":"#FD6801",
+								"float":"left",
+								"fontSize":"22px",
+								"fontSrc":"/static/font/iconfont.ttf",
+								"text":"\ue67a"
+							},
+							{
+								"color":"#969896",
+								"colorPressed":"#FD6801",
+								"float":"right",
+								"fontSize":"22px",
+								"fontSrc":"/static/font/iconfont.ttf",
+								"text":"\ue661"
+							}
+						]
+					}
+				}
 			}
 		}
 	    ,{

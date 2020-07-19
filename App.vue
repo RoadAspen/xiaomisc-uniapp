@@ -1,5 +1,5 @@
 <script>
-	export default {  // 监听 app 的生命周期
+	export default {  // 监听 app 应用 的生命周期
 		onLaunch: function() {
 			console.log('App Launch')
 		},
@@ -31,4 +31,6 @@
 	@import "/common/iconfont.css";
 	/*公共样式库*/
 	@import "/common/common.css";
+	/*全局原子类*/
+	@import "/common/zcm-main.css";
 </style>

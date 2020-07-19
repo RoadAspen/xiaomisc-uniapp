@@ -1,6 +1,6 @@
 <template>
 	<view>
-		这是class
+		这是classheihei{{a}}
 	</view>
 </template>
 
@@ -8,7 +8,7 @@
 	export default {
 		data() {
 			return {
-				
+				a:'这是一个分类'
 			}
 		},
 		methods: {
