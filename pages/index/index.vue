@@ -1,5 +1,28 @@
 <template>
 	<view class="pb-5 mb-5">
+		<!--顶部选项卡-->
+		<scroll-view scroll-x class="border-bottom scroll-row" style="height: 80rpx;">
+			<view class="scroll-row-item px-3" 
+			v-for="(item,index) in tabBars" 
+			:key="index"
+			style="height: 80rpx;line-height: 80rpx;"
+			:class="tabIndex === index ?'main-text-color border-bottom':''"
+			>
+				<text class="font-md">{{item.text}}</text>
+			</view>
+		</scroll-view>
+		
+		<!-- 页面级的y轴滚动，所有的tab页都在横向的滚动和竖向的滚动组件中 -->
+		<!-- 高度为设备高度 - 顶部搜索 - 顶部 tab - 底部tab高度-->
+		<swiper :current="tabIndex">
+			<swiper-item v-for="(item,index) in tabBars" :key="index">
+				<scroll-view scroll-y="true" style="height: 500rpx;">
+					<view v-for="i in 100" :key="i">{{i}}</view>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
+		
+		
 		<!--首页轮播图-->
 		<swiper-image :swiper_list="swipers" />
 		
@@ -39,6 +62,7 @@
 		},
 		data() {
 			return {
+				tabIndex:0,
 				swipers:[
 					{src:"../../static/images/demo/demo4.jpg"},
 					{src:"../../static/images/demo/demo4.jpg"},
@@ -110,11 +134,40 @@
 						price:"3199",
 						oldPrice:"3399"
 					}
+				],
+				tabBars:[
+					{
+						text:'关注'
+					},
+					{
+						text:'推荐'
+					},
+					{
+						text:'体育'
+					},
+					{
+						text:'热点'
+					},
+					{
+						text:'财经'
+					},
+					{
+						text:'娱乐'
+					},
+					{
+						text:'军事'
+					}
 				]
 			}
 		},
 		onLoad() {
-
+			console.log("onload")
+			// 页面级的生命周期
+			uni.getSystemInfo({
+				success:(res)=> {
+					console.log(res.windowHeight)
+				}
+			})
 		},
 		methods: {
 			toggle(){
