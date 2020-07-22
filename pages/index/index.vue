@@ -1,12 +1,19 @@
 <template>
 	<view class="pb-5 mb-5">
 		<!--顶部选项卡-->
-		<scroll-view scroll-x class="border-bottom scroll-row" style="height: 80rpx;">
+		<scroll-view  scroll-x 
+		class="border-bottom scroll-row" 
+		style="height: 80rpx;"
+		:scroll-into-view="scrollinto"
+		scroll-with-animation="true"
+		>
 			<view class="scroll-row-item px-3" 
 			v-for="(item,index) in tabBars" 
 			:key="index"
 			style="height: 80rpx;line-height: 80rpx;"
 			:class="tabIndex === index ?'main-text-color border-bottom':''"
+			@click="changeTab(index)"
+			:id="'tab'+index"
 			>
 				<text class="font-md">{{item.text}}</text>
 			</view>
@@ -14,37 +21,38 @@
 		
 		<!-- 页面级的y轴滚动，所有的tab页都在横向的滚动和竖向的滚动组件中 -->
 		<!-- 高度为设备高度 - 顶部搜索 - 顶部 tab - 底部tab高度-->
-		<swiper :current="tabIndex">
+		<swiper :duration="150"
+		:current="tabIndex" 
+		:style="'height:'+ scrollH + 'px;'"
+		@change="onChangeTab"
+		>
 			<swiper-item v-for="(item,index) in tabBars" :key="index">
-				<scroll-view scroll-y="true" style="height: 500rpx;">
-					<view v-for="i in 100" :key="i">{{i}}</view>
+				<scroll-view scroll-y="true" :style="'height:'+ scrollH + 'px;'">
+					<!--首页轮播图-->
+					<swiper-image :swiper_list="swipers" />
+					
+					<!--首页分类-->
+					<index-nav :resdata="indexnavs" />
+					
+					<!--全局分割线-->
+					<divider />
+					
+					<!--三图广告位组件-->
+					<!-- <card :showhead="false">	 -->
+						<three-adv :resdata="threeAdv" />
+					<!-- </card> -->
+					
+					<!--全局分割线-->
+					<divider></divider>
+					
+					<!-- 基础卡片组件 -->
+					<card headTitle="精选商品" bodyCover="/static/images/demo/demo4.jpg"/>
+					
+					<!-- 公共列表组件 750-8 = 742  371-->
+					<common-list :resdata="commonList"/>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		
-		
-		<!--首页轮播图-->
-		<swiper-image :swiper_list="swipers" />
-		
-		<!--首页分类-->
-		<index-nav :resdata="indexnavs" />
-		
-		<!--全局分割线-->
-		<divider />
-		
-		<!--三图广告位组件-->
-		<card :showhead="false">	
-			<three-adv :resdata="threeAdv" />
-		</card>
-		
-		<!--全局分割线-->
-		<divider></divider>
-		
-		<!-- 基础卡片组件 -->
-		<card headTitle="精选商品" bodyCover="/static/images/demo/demo4.jpg"/>
-		
-		<!-- 公共列表组件 750-8 = 742  371-->
-		<common-list :resdata="commonList"/>
 	</view>
 </template>
 
@@ -62,6 +70,8 @@
 		},
 		data() {
 			return {
+				scrollinto:"tab0",
+				scrollH:500,
 				tabIndex:0,
 				swipers:[
 					{src:"../../static/images/demo/demo4.jpg"},
@@ -161,17 +171,20 @@
 			}
 		},
 		onLoad() {
-			console.log("onload")
 			// 页面级的生命周期
 			uni.getSystemInfo({
 				success:(res)=> {
-					console.log(res.windowHeight)
+					this.scrollH = res.windowHeight - uni.upx2px(82)
 				}
 			})
 		},
 		methods: {
-			toggle(){
-				this.show = !this.show
+			changeTab(index){
+				this.tabIndex = index;
+				this.scrollinto = 'tab'+index
+			},
+			onChangeTab(e){
+				this.changeTab(e.detail.current)
 			}
 		}
 	}
