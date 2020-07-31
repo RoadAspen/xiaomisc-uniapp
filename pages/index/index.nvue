@@ -1,0 +1,65 @@
+<template>
+	<div>
+		<list>
+			<refresh style="height: 80px;"
+			@refresh="refresh" @pullingdown="pullingdown" :display="show">
+				<text>{{refreshText}}</text>
+			</refresh>
+			<cell>
+				<div style="height: 300rpx;border:2px solid #007Aff;background: #4cd964;margin: 50px;">
+					<text>333</text>
+				</div>
+			</cell>
+			<header>
+				<div style="height: 150px;background-color: #333333;"></div>
+			</header>
+			<!-- 注意事项: 不能使用 index 作为 key 的唯一标识 -->
+			<cell v-for="(item, index) in dataList" :key="item.id">
+				<div style="height: 300rpx;border-width:2px;border-style: solid;border-color: #007Aff;background: #4cd964;margin: 50px;">
+					<text>{{item.name}}</text>
+				</div>
+			</cell>
+		</list>
+	</div>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				show:'show',
+				refreshText:"下拉刷新",
+				dataList: [{
+					id: "1",
+					name: 'A'
+				}, {
+					id: "2",
+					name: 'B'
+				}, {
+					id: "3",
+					name: 'C'
+				}]
+			}
+		},
+		methods:{
+			refresh(){
+				this.refreshText = '正在刷新'
+				setTimeout(()=>{
+					this.show = 'hide';
+					this.refreshText = "下拉可以刷新"
+				},1200)
+			},
+			pullingdown(e){
+				if(e.pullingDistance > e.viewHeight){
+					this.refreshText = '释放就能刷新了'
+				}else{
+					this.refreshText = '释放就能刷新了'
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+
+</style>
