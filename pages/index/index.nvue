@@ -3,7 +3,7 @@
 		<list>
 			<refresh style="height: 80px;"
 			@refresh="refresh" @pullingdown="pullingdown" :display="show">
-				<text>{{refreshText}}</text>
+				<text style="display: flex;justify-content: center;">{{refreshText}}</text>
 			</refresh>
 			<cell>
 				<div style="height: 300rpx;border:2px solid #007Aff;background: #4cd964;margin: 50px;">
@@ -19,6 +19,9 @@
 					<text>{{item.name}}</text>
 				</div>
 			</cell>
+			<loading @loading="pullingup" :display="loadshow">
+				<text style="display: flex;justify-content: center;">{{loadMoreText}}</text>
+			</loading>
 		</list>
 	</div>
 </template>
@@ -28,7 +31,9 @@
 		data() {
 			return {
 				show:'show',
+				loadshow:'show',
 				refreshText:"下拉刷新",
+				loadMoreText:"上拉加载",
 				dataList: [{
 					id: "1",
 					name: 'A'
@@ -43,6 +48,7 @@
 		},
 		methods:{
 			refresh(){
+				// 更新
 				this.refreshText = '正在刷新'
 				setTimeout(()=>{
 					this.show = 'hide';
@@ -50,12 +56,29 @@
 				},1200)
 			},
 			pullingdown(e){
+				// 下拉
 				if(e.pullingDistance > e.viewHeight){
 					this.refreshText = '释放就能刷新了'
 				}else{
 					this.refreshText = '释放就能刷新了'
 				}
-			}
+			},
+			loadMore(){
+				// 加载
+				this.loadMoreText = '正在刷新'
+				setTimeout(()=>{
+					this.loadshow = 'hide';
+					this.loadMoreText = "上拉可以更多"
+				},1200)
+			},
+			pullingup(e){
+				// 上拉
+				if(e.pullingDistance > e.viewHeight){
+					this.loadMoreText = '释放就能加载了'
+				}else{
+					this.loadMoreText = '释放就能加载了'
+				}
+			},
 		}
 	}
 </script>
